@@ -1,0 +1,60 @@
+import * as React from 'react';
+import { Button, View, Text, TextInput} from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+
+function HomeScreen({ navigation }) {
+  return (
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+      <Text>Bem vindo</Text>
+      <Text>ao</Text>
+      <Text>App Amigo</Text>
+      <Button
+        title="Acessar"
+        onPress={() => navigation.navigate('Details')}
+      />
+    </View>
+  );
+}
+
+function DetailsScreen() {
+  return (
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+      <Text>Acessar</Text>
+    </View>
+  );
+}
+
+function Login () {
+  return (
+  <View> <TextInput
+        style={styles.input}
+
+        placeholder="Usuário"
+    
+      />
+      <TextInput
+        style={styles.input}
+    
+        placeholder="Senha"
+        keyboardType="numeric"
+      />
+      </View>
+  );
+}
+const Stack = createNativeStackNavigator();
+
+function App() {
+  return (
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="Home">
+        <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Screen name="Details" component={DetailsScreen} />
+      </Stack.Navigator>
+    </NavigationContainer>
+       
+  );
+}
+
+
+export default App;
