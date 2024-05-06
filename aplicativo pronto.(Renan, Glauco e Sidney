@@ -1,0 +1,177 @@
+import React, { useState } from "react";
+import {
+  Button,
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  StyleSheet,
+  Alert,
+  ImageBackground,
+} from "react-native";
+
+import imglogin from "./assets/login.png";
+import imgbemvindo from "./assets/bem-vindo.png";
+import imghome from "./assets/home.png";
+
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+
+function BemVindo({ navigation }) {
+  return (
+    <View style={styles.container}>
+      <ImageBackground
+        source={imgbemvindo}
+        resizeMode="cover"
+        style={styles.image}
+      >
+        <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+         
+          <View>
+            <TouchableOpacity
+              onPress={() => navigation.navigate('login')}
+              style={{ 
+                backgroundColor: '#80BB6C',
+                top: 70,
+                paddingVertical: 10,
+                paddingHorizontal: 50,
+                borderRadius: 10, 
+                marginBottom: 20, 
+              }}>
+              <Text style={styles.botao}>Acessar</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </ImageBackground>
+    </View>
+  );
+}
+
+function Login({ navigation }) {
+  const [usuario, setUsuario] = useState("");
+  const [senha, setSenha] = useState("");
+
+  const funcaologin = () => {
+    if (usuario === "Amigo" && senha === "4321") {
+      navigation.navigate("home");
+    } else {
+      Alert.alert("login ou senha INCORRETA, tente novamente.");
+      setUsuario("");
+      setSenha("");
+      navigation.navigate("BemVindo");
+    }
+  };
+
+  return (
+    <View style={styles.container}>
+      <ImageBackground
+        source={imglogin}
+        resizeMode="cover"
+        style={styles.image}
+      >
+        <View>
+          <TextInput
+            style={[styles.input, { marginBottom: 20, top:50, }]}
+            placeholder="Usuário"
+            onChangeText={setUsuario}
+          />
+          <TextInput
+            style={[styles.input, { marginBottom: 20, top:60, }]}
+            placeholder="Senha"
+            onChangeText={setSenha}
+            secureTextEntry={true}
+          />
+          <TouchableOpacity onPress={funcaologin} style={[styles.button, styles.loginButton]}>
+            <Text style={styles.buttonTextlogin}>Login</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => {}} style={[styles.button, styles.socialButton]}>
+            <Text style={styles.buttonText}>Entrar com Facebook</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => {}} style={[styles.button, styles.socialButton]}>
+            <Text style={styles.buttonText}>Entrar com Google</Text>
+          </TouchableOpacity>
+        </View>
+      </ImageBackground>
+    </View>
+  );
+}
+
+
+function Home({ navigation }) {
+  return (
+    <View style={styles.container}>
+      <ImageBackground
+        source={imghome}
+        resizeMode="cover"
+        style={styles.image}
+      >
+        <Text></Text>
+      </ImageBackground>
+    </View>
+  );
+}
+
+const Stack = createNativeStackNavigator();
+
+function App() {
+  return (
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="BemVindo">
+        <Stack.Screen name="BemVindo" component={BemVindo} />
+        <Stack.Screen name="login" component={Login} />
+        <Stack.Screen name="home" component={Home} />
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
+}
+
+export default App;
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  image: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  button: {
+    top:70,
+    paddingVertical: 10,
+    paddingHorizontal: 10,
+    marginBottom: 20,
+    borderRadius: 20, // Bordas redondas
+  },
+  loginButton: {
+    backgroundColor: '#296414', // Cor do botão de login
+  },
+  socialButton: {
+    backgroundColor: '#FFFFFF', // Cor dos botões sociais
+    borderWidth: 2,
+  },
+  buttonText: {
+    fontSize: 18,
+    color: "#00000",
+    textAlign: "center",
+  },
+  input: {
+    textAlign: "center",
+    borderRadius: 6,
+    borderWidth: 1,
+    marginBottom: 20,
+    paddingLeft: 10,
+  },
+  buttonTextlogin: {
+    fontSize: 19,
+    color: "#FFFFFF",
+    textAlign: "center",
+    fontWeight: 'bold',
+  },
+  botao: {
+    fontSize: 18,
+    color: "#FFFFFF",
+    textAlign: "center",
+    fontWeight: 'bold',
+  },
+});
